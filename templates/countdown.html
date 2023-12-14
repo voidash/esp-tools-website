@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block title %}ESP Tools{% endblock title %}
+{% block head %}
+    {{ super() }}
+
+    <style type="text/css">
+          @import url('https://fonts.cdnfonts.com/css/silkscreen');
+          *{
+              box-sizing: border-box;
+          }
+
+          body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 100vh;
+            font-family: 'Silkscreen Expanded', sans-serif;
+          }
+
+          @keyframes gradient {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+
+          .container{
+              width: 70%;
+              margin: 0 auto;
+              height: 100vh;
+          }
+          .row{
+              display: flex;
+              width: 100%;
+              height: 500px;
+          }
+          .count_down_wrapper{
+              width: 60%;
+              display: flex;
+              margin: 3rem auto;
+              text-align: center;
+              flex-direction: column;
+          }
+          .content{
+
+          }
+          .slogan{
+              font-size: 2.2em;
+              margin: 0;
+              padding: 0;
+              color: #fff;
+          }
+          .launch_time{
+              font-size: 1.6em;
+              background-color: #fff;
+              display: inline-block;
+              padding: 5px 25px;
+          }
+          .counters{
+              width: 100%;
+              display: flex;
+          }
+          .items{
+              display: flex;
+              flex: 1;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              color: #fff;
+
+          }
+          .input{
+              width: 80%;
+              background: linear-gradient(1deg, rgb(32, 38, 57) 11.4%, rgb(64 63 63) 70.2%);
+              padding: 10px;
+              margin: 10px;
+              text-align: center;
+              border-radius: 20px;
+              text-align: center;
+              font-weight: bold;
+              font-family: 'Silkscreen Expanded', sans-serif;
+          }
+          .items label{
+              margin-top: 10px;
+              font-size: 1.3em;
+              font-weight: 300;
+              letter-spacing: 3px;
+          }
+    </style>
+{% endblock head %}
+{% block content %}
+          <div class="container">
+                  <div class="row">
+                      <div class="count_down_wrapper">
+                          <div class="content">
+                              <h1>ESP Tools</h1>
+                              <h4 class="slogan">We're Coming Soon</h4>
+                              <h3 class="slogan">&#127881; &#127881; &#127881; </h3>
+                              <h4 class="launch_time" id="launchTime"></h4>
+                          </div>
+                          <div class="counters">
+                              <div class="items">
+                                <div class="input" id="days">00</div>
+                                  <label for="days">Days</label>
+                              </div>
+                              <div class="items">
+                                <div class="input" id="hours">00</div>
+                                  <label for="days">Hours</label>
+                              </div>
+                              <div class="items">
+                                <div class="input" id="min">00</div>
+                                  <label for="days">Min</label>
+                              </div>
+                              <div class="items">
+                                <div class="input" id="sec">00</div>
+                                  <label for="days">Sec</label>
+                              </div>
+                          </div>
+                        <p>Open Source Initiative for ESP Microcontrollers within Rust Ecosystem</p>
+                        <p>Site is being built with Actix web on Rust</p>
+                        <a style="font-size:20px" href="https://twitter.com/esp_tools">Follow Us on Twitter</div>
+                      </div>
+                  </div>
+              </div>
+    <script>
+
+      function formatDate(date) {
+          const options = {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: true,
+          };
+          return date.toLocaleString('en-US', options);
+      }
+
+      var time = new Date("2024","1","14");
+
+
+      var autoExtendedTime = formatDate(time);
+      //const fixedEndTime = "1 November 2023 6:00 PM";
+
+
+      const launchTime = autoExtendedTime;
+      document.getElementById('launchTime').innerText = launchTime;
+
+      let daysEl = document.getElementById('days');
+      let hoursEl = document.getElementById('hours');
+      let minEl = document.getElementById('min');
+      let scondsEl = document.getElementById('sec');
+
+      function timer(){
+          const end = new Date(launchTime);
+          const now = new Date();
+          const difference = (end - now) / 1000;
+          
+          if(difference < 0 ) return;
+          
+
+          const days = Math.floor(difference / 3600 / 24);
+          const hours = Math.floor(difference / 3600) % 24;
+          const minutes = Math.floor(difference / 60 ) % 60;
+          const seconds = Math.floor(difference ) % 60;
+
+
+          daysEl.innerHTML = days;
+          hoursEl.innerHTML = hours;
+          minEl.innerHTML = minutes;
+          scondsEl.innerHTML = seconds;
+      }
+
+
+      setInterval(
+          () => {
+              timer()
+          },
+          1000
+      )
+      </script>
+{% endblock content %}
